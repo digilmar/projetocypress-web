@@ -1,12 +1,11 @@
 /// <reference types="cypress" />
 
 // Funcionalidade
-describe('login', () => { 
-//describe é uma função que espera dois parâmetros, aonde que o primeiro parâmetro é um nome e o segundo é a função que irá executar.
+describe('login', () => {
 
    // Cenário 1
    it('Login com sucesso', () => {
-      // Abre site do automatonpratice
+      // Abre site
       cy.visit('https://automationpratice.com.br/login')
       
       // Preenche e-mail
@@ -22,7 +21,6 @@ describe('login', () => {
       cy.get('#swal2-title').should('have.text', 'Login realizado')
 
    })   
-   // Alteração arquivo para passar branch
    // Cenário 2
    it('Login com senha inválida', () => {
       cy.visit('https://automationpratice.com.br/login')
@@ -34,7 +32,6 @@ describe('login', () => {
          .should('be.visible')
    })   
    // Cenário 3
-   // Inserindo login com e-mail inválido. 
      it('Login com e-mail inválido', () => {
       cy.visit('https://automationpratice.com.br/login')
       cy.get('#user').type('eita')
