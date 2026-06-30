@@ -6,7 +6,7 @@ describe('login', () => {
 
    // Cenário 1
    it('Login com sucesso', () => {
-      // Abre site
+      // Abre site do automatonpratice
       cy.visit('https://automationpratice.com.br/login')
       
       // Preenche e-mail
