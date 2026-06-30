@@ -5,9 +5,13 @@ describe('Desafio Cadastro usuário', () => {
 
     // Declarando nomes para uma váriável
     
-    const user_name = 'Gilmar Figueiredo'
-    const user_email = 'digilmar@gmail.com'
-    const user_password = '123456'
+    //const user_name = 'Gilmar Figueiredo'
+    //const user_email = 'digilmar@gmail.com'
+    //const user_password = '123456'
+
+    //Importando dados do cadastro de usuário do arquivo (enderecos_login.json) que esta na fixtures
+
+    const user_data = require('../fixtures/ederecos_login.json')
 
    it('Validar campo nome vazio', () => {
       // Acessou o site que está no arquivo da configuração e verificou se a logo est na página
@@ -40,7 +44,7 @@ describe('Desafio Cadastro usuário', () => {
             .click()
             .get('#user')
             .should('be.visible')
-            .type(user_name)
+            .type(user_data.name)
   
         cy.get('#btnRegister')
             .click()
@@ -60,7 +64,7 @@ describe('Desafio Cadastro usuário', () => {
 
         cy.get('#user')
             .should('be.visible')
-            .type(user_name)
+            .type(user_data.name)
 
          cy.get('#email')
             .should('be.visible')
@@ -89,11 +93,11 @@ describe('Desafio Cadastro usuário', () => {
 
         cy.get('#user')
             .should('be.visible')
-            .type(user_name)
+            .type(user_data.name)
 
          cy.get('#email')
             .should('be.visible')
-            .type(user_email)    
+            .type(user_data.email)    
             
    
         cy.get('#btnRegister')
@@ -114,11 +118,11 @@ describe('Desafio Cadastro usuário', () => {
 
         cy.get('#user')
             .should('be.visible')
-            .type(user_name)
+            .type(user_data.name)
 
          cy.get('#email')
             .should('be.visible')
-            .type(user_email)   
+            .type(user_data.email)   
             
         cy.get('#password')
             .should('be.visible')
@@ -143,15 +147,15 @@ describe('Desafio Cadastro usuário', () => {
 
         cy.get('#user')
             .should('be.visible')
-            .type(user_name)
+            .type(user_data.name)
 
          cy.get('#email')
             .should('be.visible')
-            .type(user_email)   
+            .type(user_data.email)   
             
         cy.get('#password')
             .should('be.visible')
-            .type(user_password)      
+            .type(user_data.password)      
             
    
         cy.get('#btnRegister')
@@ -161,7 +165,7 @@ describe('Desafio Cadastro usuário', () => {
             .should('have.text', 'Cadastro realizado!')
 
         cy.get('#swal2-html-container')
-            .should('have.text', `Bem-vindo ${user_name}`)
+            .should('have.text', `Bem-vindo ${user_data.name}`)
 
    })
 
