@@ -1,173 +1,66 @@
 /// <reference types="cypress" />
 
 // Funcionalidade
+import { abrirCadastro, preencherNome, preencherEmail, preencherSenha, enviarCadastro, validarErro, validarSucesso } from '../pages/register'
+import { faker } from '@faker-js/faker';
+import { generat } from 'gerador-validador-cpf';
+import generateCpf from '@brazilian-utils/generate-cpf';
+import { cpf, cnpj } from 'cpf-cnpj-validator';
+
 describe('Desafio Cadastro usuário', () => {
 
-    // Declarando nomes para uma váriável
-    
-    //const user_name = 'Gilmar Figueiredo'
-    //const user_email = 'digilmar@gmail.com'
-    //const user_password = '123456'
+    const user_data = require('../fixtures/endereco_login.json')
 
-    //Importando dados do cadastro de usuário do arquivo (enderecos_login.json) que esta na fixtures
+    beforeEach(() => {
+        abrirCadastro()
+    })
 
-    const user_data = require('../fixtures/ederecos_login.json')
+    it('Cadastro de usuário com nome vazio', () => {
+        preencherEmail(faker.internet.email())
+        preencherSenha(faker.number.int(99999999))
+        enviarCadastro()
+        validarErro('O campo nome deve ser prenchido')
+    })
 
-   it('Validar campo nome vazio', () => {
-      // Acessou o site que está no arquivo da configuração e verificou se a logo est na página
-      cy.visit('/')
-        .get('.header-logo')
+    it('Cadastro de usuário com e-mail vazio', () => {
+        preencherNome(faker.person.fullName())
+        preencherSenha(faker.internet.password(6))
+        enviarCadastro()
+        validarErro('O campo e-mail deve ser prenchido corretamente')
+    })
 
-    // Clicar no botão cadastro quando o mesmo estiver visível
-        cy.get('.fa-lock')
-            .click()
-    //Clicar no campo usuário quando visível
-        cy.get('#user')
-            .should('be.visible')
-    
-    // Clicar no registrar
-        cy.get('#btnRegister')
-            .click()
+    it('Cadastro com e-mail inválido', () => {
+        cy.get('.fa-lock').click()
+        preencherNome(faker.person.fullName())
+        preencherEmail('emaillll')
+        preencherSenha(faker.internet.password(6))
+        enviarCadastro()
+        validarErro('O campo e-mail deve ser prenchido corretamente')
+    })
 
-    // Validar mensagem de erro no campo obrigatório 'Nome'
-        cy.get('.errorLabel')
-            .should('have.text', 'O campo nome deve ser prenchido')
+    it('Cadastro de usuário com senha vazia', () => {
+        preencherNome(user_data.name)
+        preencherEmail(faker.internet.email())
+        enviarCadastro()
+        validarErro('O campo senha deve ter pelo menos 6 dígitos')
+    })
 
-   })
+    it('Cadastro de usuário com senha inválida', () => {
+        preencherNome(faker.person.fullName())
+        preencherEmail(faker.internet.email())
+        preencherSenha(faker.string.numeric(4))
+        enviarCadastro()
+        validarErro('O campo senha deve ter pelo menos 6 dígitos')
+    })
 
-    it('Validar campo e-mail vazio', () => {
-      
-      cy.visit('/')
-        .get('.header-logo')
-        
-        cy.get('.fa-lock')
-            .click()
-            .get('#user')
-            .should('be.visible')
-            .type(user_data.name)
-  
-        cy.get('#btnRegister')
-            .click()
+    it('Cadastro realizado com sucesso', () => {
 
-        cy.get('.errorLabel')
-            .should('have.text', 'O campo e-mail deve ser prenchido corretamente')
+        const name = faker.person.fullName();
 
-   })
-
-      it('Validar campo e-mail inválido', () => {
-
-      cy.visit('/')
-        .get('.header-logo')
-          
-        cy.get('.fa-lock')
-            .click()
-
-        cy.get('#user')
-            .should('be.visible')
-            .type(user_data.name)
-
-         cy.get('#email')
-            .should('be.visible')
-            .type('emaillll')   
-            
-        cy.get('#password')
-            .should('be.visible')
-            .type('12345')      
-            
-   
-        cy.get('#btnRegister')
-            .click()
-
-        cy.get('.errorLabel')
-            .should('have.text', 'O campo e-mail deve ser prenchido corretamente')
-
-   })
-
-       it('Validar campo senha vazio', () => {
-
-      cy.visit('/')
-        .get('.header-logo')
-          
-        cy.get('.fa-lock')
-            .click()
-
-        cy.get('#user')
-            .should('be.visible')
-            .type(user_data.name)
-
-         cy.get('#email')
-            .should('be.visible')
-            .type(user_data.email)    
-            
-   
-        cy.get('#btnRegister')
-            .click()
-
-        cy.get('.errorLabel')
-            .should('have.text', 'O campo senha deve ter pelo menos 6 dígitos')
-
-   })
-
-   it('Validar campo senha inválida', () => {
-
-      cy.visit('/')
-        .get('.header-logo')
-          
-        cy.get('.fa-lock')
-            .click()
-
-        cy.get('#user')
-            .should('be.visible')
-            .type(user_data.name)
-
-         cy.get('#email')
-            .should('be.visible')
-            .type(user_data.email)   
-            
-        cy.get('#password')
-            .should('be.visible')
-            .type('12345')      
-            
-   
-        cy.get('#btnRegister')
-            .click()
-
-        cy.get('.errorLabel')
-            .should('have.text', 'O campo senha deve ter pelo menos 6 dígitos')
-
-   })
-
-   it('Cadastro realizado com sucesso', () => {
-
-      cy.visit('/')
-        .get('.header-logo')
-          
-        cy.get('.fa-lock')
-            .click()
-
-        cy.get('#user')
-            .should('be.visible')
-            .type(user_data.name)
-
-         cy.get('#email')
-            .should('be.visible')
-            .type(user_data.email)   
-            
-        cy.get('#password')
-            .should('be.visible')
-            .type(user_data.password)      
-            
-   
-        cy.get('#btnRegister')
-            .click()
-
-        cy.get('#swal2-title')
-            .should('have.text', 'Cadastro realizado!')
-
-        cy.get('#swal2-html-container')
-            .should('have.text', `Bem-vindo ${user_data.name}`)
-
-   })
-
+        preencherNome(name)
+        preencherEmail(faker.internet.email({provider:'hotmail.com'}))
+        preencherSenha(faker.number.int(99999999))
+        enviarCadastro()
+        validarSucesso(name)
+    })
 })
-      
