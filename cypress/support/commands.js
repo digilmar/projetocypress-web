@@ -23,3 +23,12 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// Command simples de login usado pelos testes
+Cypress.Commands.add('login', (email = 'digilmar@gmail.com', password = '123456*') => {
+	cy.visit('/login')
+	cy.get('#user').clear().type(email)
+	cy.get('#password').clear().type(password)
+	cy.get('#btnLogin').click()
+	cy.get('#swal2-title').should('have.text', 'Login realizado')
+})

@@ -4,7 +4,7 @@
 
 describe('cadastroUsuarios', () => {
     // Cenário 1 - Usuário cadastrado realizado com sucesso
-    it('Login com sucesso', () => {
+    it.only('Login com sucesso', () => {
         // Acessar o site
 
         cy.visit('https://automationpratice.com.br/');
