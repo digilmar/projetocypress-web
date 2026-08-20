@@ -22,7 +22,6 @@ jobs:
       - name: Cypress run testes
         uses: cypress-io/github-action@v7
         with:
-          working-directory: projetocypress-web
           record: true
         env: 
           # Variável de ambiente configurada nos Secrets do GitHub
