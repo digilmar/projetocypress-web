@@ -14,7 +14,7 @@ jobs:
 
     # Passos que serão executados na pipeline
     steps:
-      # Clone do projeto Versão estável atualizada
+      # Clone do projeto (Versão estável atualizada)
       - name: Checkout/Clone do projeto
         uses: actions/checkout@v4
 
@@ -22,7 +22,6 @@ jobs:
       - name: Cypress run testes
         uses: cypress-io/github-action@v7
         with:
-          working-directory: projetocypress-web  # <-- Adicione exatamente esta linha
           record: true
         env: 
           # Variável de ambiente configurada nos Secrets do GitHub
