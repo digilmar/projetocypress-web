@@ -12,18 +12,18 @@ jobs:
     # Em qual máquina que a pipeline será executada
     runs-on: ubuntu-24.04
 
-    # Passos que serão executados na pipeline.
+    # Passos que serão executados na pipeline
     steps:
-      # Clone do projeto (Versão estável atualizada).
+      # Clone do projeto (Versão estável atualizada)
       - name: Checkout/Clone do projeto
         uses: actions/checkout@v4
 
-      # Instalação das dependências e execução dos testes do Cypress.
+      # Instalação das dependências e execução dos testes do Cypress
       - name: Cypress run testes
         uses: cypress-io/github-action@v7
         with:
           working-directory: projetocypress-web
           record: true
         env: 
-          # Variável de ambiente configurada nos Secrets do GitHub.
+          # Variável de ambiente configurada nos Secrets do GitHub
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
