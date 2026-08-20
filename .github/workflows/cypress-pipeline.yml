@@ -16,6 +16,7 @@ jobs:
         uses: cypress-io/github-action@v7
         with:
           working-directory: projetocypress-web # <-- Mantemos este apontamento
+          project: ./projetocypress-web # <-- Adicione esta linha exatamente aqui
           record: true
         env: 
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
