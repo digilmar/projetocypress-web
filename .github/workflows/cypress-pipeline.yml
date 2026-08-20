@@ -1,0 +1,30 @@
+# Nome da pipeline.
+name: Pipeline Cypress web
+
+# Em que momento que a pipeline será executada.
+on: 
+    pull_request:
+      branches: [master]
+
+jobs:
+    # O que vai ser executado na pipeline.
+    # Aqui só teremos um job para rodar nosso teste, mas podemos ter vários jobs.
+  cypress-run:
+    # Em qual máquina que a pipeline será executada
+    runs-on: ubuntu-24.04
+
+    # Passos que serão executados na pipeline.
+    # Os steps são comandos que serão executados no terminal da máquina.
+    steps:
+        # Clone do projeto.
+      - name: Checkout/Clone do projeto
+        uses: actions/checkout@v7
+      # Instalação e configuração das dependências do pacote node.
+      # E executar todos os testes do Cypress.
+      - name: Cypress run testes
+        uses: cypress-io/github-action@v7
+        with:
+            record: true
+        env: 
+            # Variáveis de ambiente que serão utilizadas no Cypress.
+            CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
