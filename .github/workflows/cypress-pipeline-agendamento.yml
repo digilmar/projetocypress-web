@@ -1,9 +1,10 @@
 # Nome da pipeline
-name: Pipeline Cypress web
+name: Pipeline de agendamento Cypress web
+
 # Em que momento será executada, nesse caso quando haver um pull request na branch master
 on:
-  pull_request:
-    branches: [master]
+  schedule:
+    - cron: '0 14 * * 1-3'
 
 jobs:
   cypress-run:
