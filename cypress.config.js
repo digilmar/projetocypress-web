@@ -2,20 +2,29 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   projectId: 'f2apqt',
-  e2e: {
-    reporter: 'cypress-mochawesome-reporter',
-     reporterOptions: {
+
+  reporter: 'cypress-mochawesome-reporter',
+
+  reporterOptions: {
     charts: true,
     reportTitle: 'Curso de Cypress',
     reportPageTitle: 'Projeto do curso de Cypress',
-     },
+    reportDir: 'cypress/reports',
+    overwrite: false,
+    html: true,
+    json: true
+  },
+
+  e2e: {
     baseUrl: 'https://automationpratice.com.br/',
-    defaultCommandTimeout: 5000, // Tempo limite padrão para comandos
+    defaultCommandTimeout: 5000,
+
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
-      // implemente eventos de nó aqui
+      return config;
     },
-    viewportWidth: 1280,  // Largura global
-    viewportHeight: 1020, // Altura global
+
+    viewportWidth: 1280,
+    viewportHeight: 1020,
   },
 });

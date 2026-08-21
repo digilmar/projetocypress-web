@@ -27,4 +27,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: Relatório Mocha
-          path: cypress\reports\html
+          path: cypress/reports
+          if-no-files-found: error
